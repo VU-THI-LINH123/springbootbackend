@@ -66,11 +66,15 @@ public class SanphamController {
 	 @Autowired
 	    private SanphamRepository sanphamRepository;
 	
-	    @RequestMapping(value = "remove/{productId}", method = RequestMethod.GET)
-	    public HashMap<Long, CartDto> viewRemove( @PathVariable("productId") long productId) {
-	      
-	       
-	        return cartItem.viewRemove(productId);
+	   @RequestMapping(value = "remove/{productId}", method = RequestMethod.GET)
+	    public ResponseEntity<Page<CartDto>> viewRemove1( @PathVariable("productId") long productId){
+	    	System.out.print("haha\n");
+	    	HashMap<Long, CartDto>danhsach=cartItem.viewRemove(productId);
+	    	Collection<CartDto> values = danhsach.values();
+	    	List<CartDto> listOfValues = new ArrayList<CartDto>(values);
+	    	Page<CartDto> result = new PageImpl<CartDto>(listOfValues);
+	
+	       return new ResponseEntity<>(result, HttpStatus.OK);
 	    }
 	    public double totalPrice(HashMap<Long, CartDto> cartItems) {
 	        int count = 0;
