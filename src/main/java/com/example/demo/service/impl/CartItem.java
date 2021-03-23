@@ -42,7 +42,7 @@ public class CartItem {
 		         Sanpham sanpham=null;
 		         sanpham = sanphamRepository.getOne(productId);
 		         int max=sanpham.getSoluong();
-		        if (sanpham != null && max>1) {//con hang
+		        if (sanpham != null && max>=1) {//con hang
 		            if (cartItems.containsKey(productId)) {
 		            	 CartDto item = cartItems.get(productId);
 		                if(max>=(item.getSoluong() + soluong)) {//hang nay khong du de cap nhat
@@ -68,8 +68,8 @@ public class CartItem {
 		      
 		        return cartItems;
       }
-	    @RequestMapping(value = "remove/{productId}", method = RequestMethod.GET)
-	    public HashMap<Long, CartDto> viewRemove( @PathVariable("productId") long productId) {
+	    
+	    public HashMap<Long, CartDto> viewRemove(long productId) {
 	        HashMap<Long, CartDto> cartItems = (HashMap<Long, CartDto>) session.getAttribute("CartItems");
 	        if (cartItems == null) {
 	            cartItems = new HashMap<>();
